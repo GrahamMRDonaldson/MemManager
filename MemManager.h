@@ -20,9 +20,17 @@ public:
 
 	//FUNC
 	//gets the process handle/ID
-	void getProc(std::string target);
+	bool getProc(std::string target);
 	//gets a given module and adds it to the module lists
-	void getMod(std::string target);
+	bool getMod(std::string target);
+	
+
+	//PATTERN SCANNING
+
+	//TODO create a function in MemManager Class to automate the search through a given module, if given the name of the module, and the mask/pattern
+
+	//scans through a base with a given size, searching for a pattern with wildcards defined by mask
+	DWORD PatternScan(char* base, int size, std::string pattern, std::string mask);
 
 	//READ
 	template <class T> inline T Read(DWORD dwAddress) {
@@ -30,16 +38,11 @@ public:
 		ReadProcessMemory(hProcess, LPVOID(dwAddress), &value, sizeof(value), 0);
 		return value;
 	}
+
 	//Write
-	template <class T> void Write(DWORD dwAddress, const T& value) {
+	template <class T> inline void Write(DWORD dwAddress, const T& value) {
 		WriteProcessMemory(hProcess, LPVOID(dwAddress), &value, sizeof(value), 0);
 	}
-
-	//TODO
-	/*
-	Write Pattern scanning so I am able to locate specific points in the process (done dynamically so its differnt each time, but the surrounding values are the same)
-	Change getProc and getMod to booleans to return false if the process/module was not found
-	*/
 
 };
 

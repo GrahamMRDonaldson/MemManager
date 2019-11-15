@@ -1,6 +1,6 @@
 #include "MemManager.h"
 
-void MemManager::getProc(std::string target)
+bool MemManager::getProc(std::string target)
 {
 	//yes the converison is a bit sloppy
 	std::wstring w_target(target.begin(), target.end());
@@ -21,12 +21,15 @@ void MemManager::getProc(std::string target)
 				CloseHandle(snapshot);
 				this->th32ProcessID = entry.th32ProcessID;
 				this->hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, this->th32ProcessID);
+				return true;
 			}
 		}
 	}
+	CloseHandle(snapshot);
+	return false;
 }
 
-void MemManager::getMod(std::string target)
+bool MemManager::getMod(std::string target)
 {
 	//yes the converison is a bit sloppy
 	std::wstring w_target(target.begin(), target.end());
@@ -45,11 +48,34 @@ void MemManager::getMod(std::string target)
 			if (!wcscmp(entry.szModule, wchar_target))
 			{
 				this->modEntrys.push_back(entry);
+				CloseHandle(snapshot);
+				return true;
 			}
 		}
 	}
 
 	CloseHandle(snapshot);
+	return false;
+}
+
+DWORD MemManager::PatternScan(char* base, int size, std::string pattern, std::string mask)
+{
+	int maskLength = mask.length();
+	bool found = true;
+
+	for (unsigned int i = 0; i < size - maskLength; i++) {						//cycle through the entire specified range
+		found = true;															//set true at beginning to be proven wrong
+		for (unsigned int j = 0; j < maskLength; j++) {							//cylce through the potential memory
+			if (mask.c_str()[j] != '?' && mask.c_str()[j] != *(base + i + j)) { //if the byte isn't a wildcard, or not the correct character
+				found = false;	//the pattern doesn't match
+				break;			//move on in the list
+			}
+		}
+		if (found) {//if the area matched the pattern
+			return (DWORD)(base + i); //returning the beginning of the pattern
+		}
+	}
+	return NULL; //otherwise return a nullpointer
 }
 
 MemManager::MemManager()

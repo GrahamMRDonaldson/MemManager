@@ -1,2 +1,6 @@
 ﻿  MemManager.cpp
-  Memory Management Class.vcxproj -> C:\Users\Graham Donaldson\source\repos\Memory Management Class\Debug\Memory Management Class.exe
+C:\Users\Graham Donaldson\Desktop\GITHUB\MemManager\MemManager.cpp(66,29): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+  Generating Code...
+C:\Users\Graham Donaldson\Desktop\GITHUB\MemManager\MemManager.cpp(68,30): warning C4018: '<': signed/unsigned mismatch
+  Memory Management Class.vcxproj -> C:\Users\Graham Donaldson\Desktop\GITHUB\MemManager\Debug\Memory Management Class.exe
