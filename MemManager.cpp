@@ -58,6 +58,24 @@ bool MemManager::getMod(std::string target)
 	return false;
 }
 
+DWORD MemManager::PatternScanModule(std::string module, std::string pattern, std::string mask)
+{
+	std::wstring w_module(module.begin(), module.end());
+	const wchar_t* wchar_module = w_module.c_str();
+
+	int modIndex;
+	for (int i = 0; i < modEntrys.size(); i++) {
+		if (!wcscmp(modEntrys[i].szModule, wchar_module)) {
+			modIndex = i;
+		}
+	}
+
+	char* begin_of_module = (char*)(MEM->modEntrys[0].modBaseAddr);
+	int size_of_module = (MEM->modEntrys[0].modBaseSize);
+
+	return PatternScan(begin_of_module, size_of_module, pattern, mask);
+}
+
 DWORD MemManager::PatternScan(char* base, int size, std::string pattern, std::string mask)
 {
 	int maskLength = mask.length();

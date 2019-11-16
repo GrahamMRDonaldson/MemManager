@@ -28,6 +28,7 @@ public:
 	//PATTERN SCANNING
 
 	//TODO create a function in MemManager Class to automate the search through a given module, if given the name of the module, and the mask/pattern
+	DWORD PatternScanModule(std::string module, std::string pattern, std::string mask);
 
 	//scans through a base with a given size, searching for a pattern with wildcards defined by mask
 	DWORD PatternScan(char* base, int size, std::string pattern, std::string mask);
