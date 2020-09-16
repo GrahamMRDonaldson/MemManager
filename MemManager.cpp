@@ -44,7 +44,7 @@ bool MemManager::getMod(std::string target)
 	{
 		while (Module32Next(snapshot, &entry) == TRUE)
 		{
-			//std::wcout << entry.szModule << std::endl; //this would print all of the module names until you found the one you were looking for
+			std::wcout << entry.szModule << std::endl; //this would print all of the module names until you found the one you were looking for
 			if (!wcscmp(entry.szModule, wchar_target))
 			{
 				this->modEntrys.push_back(entry);
@@ -58,6 +58,7 @@ bool MemManager::getMod(std::string target)
 	return false;
 }
 
+/*
 DWORD MemManager::PatternScanModule(std::string module, std::string pattern, std::string mask)
 {
 	std::wstring w_module(module.begin(), module.end());
@@ -95,12 +96,13 @@ DWORD MemManager::PatternScan(char* base, int size, std::string pattern, std::st
 	}
 	return NULL; //otherwise return a nullpointer
 }
+*/
 
 MemManager::MemManager()
 {
 	//note this is just an example, don't read process memory of a program unless the program allows you to/is okay with it
-	this->getProc("example.exe");
-	this->getMod("example.dll");
+	//this->getProc("example.exe");
+	//this->getMod("example.dll");
 	//Alternatively, you could declare what program and modules you want to read based off of the program
 }
 

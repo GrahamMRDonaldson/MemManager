@@ -4,6 +4,11 @@
 int main()
 {
 	MemManager* MEM = new MemManager();
+
+	MEM->getProc("csgo.exe");
+	MEM->getMod("client_panorama.dll");
+
+	/*
 	DWORD someBaseAddress = reinterpret_cast<DWORD>(MEM->modEntrys[0].modBaseAddr);
 
 	//assuming the integer location is static every time the process is started
@@ -20,5 +25,5 @@ int main()
 	DWORD exampleOffse2 = MEM->PatternScan(begin_of_module, size_of_module, "\xA1\x00\x00\x00\x00\x83\xC4\x1C\xF3\x0F\x10\x05", "x????xxxxxxx");
 
 	int someVal2 = MEM->Read<int>(someBaseAddress + exampleOffse2);
-
+	*/
 }
